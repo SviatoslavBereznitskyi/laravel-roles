@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionsTable extends Migration
+class CreateRoleUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,24 +14,20 @@ class CreatePermissionsTable extends Migration
     public function up()
     {
         $connection = config('roles.connection');
-        $table = config('roles.permissionsTable');
+        $table = config('roles.roleTeamTable');
+        $rolesTable = config('roles.rolesTable');
+        $teamsTable = config('roles.teamsTable');
         $tableCheck = Schema::connection($connection)->hasTable($table);
 
         if (!$tableCheck) {
-            Schema::connection($connection)->create($table, function (Blueprint $table) {
+            Schema::connection($connection)->create($table, function (Blueprint $table) use ($rolesTable, $teamsTable) {
                 $table->increments('id')->unsigned();
-                $table->string('name');
-                $table->string('slug')->unique();
-                $table->string('description')->nullable();
-                $table->string('model')->nullable();
-                $table->unsignedInteger('parent_id')->nullable();
+                $table->integer('role_id')->unsigned()->index();
+                $table->foreign('role_id')->references('id')->on($rolesTable)->onDelete('cascade');
+                $table->unsignedBigInteger('team_id')->unsigned()->index();
+                $table->foreign('team_id')->references('id')->on($teamsTable)->onDelete('cascade');
                 $table->timestamps();
                 $table->softDeletes();
-
-                $table->foreign('parent_id')
-                    ->references('id')
-                    ->on($table)
-                    ->onDelete('set null');
             });
         }
     }
@@ -44,7 +40,7 @@ class CreatePermissionsTable extends Migration
     public function down()
     {
         $connection = config('roles.connection');
-        $table = config('roles.permissionsTable');
+        $table = config('roles.roleUserTable');
         Schema::connection($connection)->dropIfExists($table);
     }
 }

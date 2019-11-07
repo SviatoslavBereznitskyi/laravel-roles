@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use jeremykenedy\LaravelRoles\Contracts\RoleHasRelations as RoleHasRelationsContract;
 use jeremykenedy\LaravelRoles\Traits\DatabaseTraits;
+use jeremykenedy\LaravelRoles\Traits\InheritanceTrait;
 use jeremykenedy\LaravelRoles\Traits\RoleHasRelations;
 use jeremykenedy\LaravelRoles\Traits\Slugable;
 
 class Team extends Model implements RoleHasRelationsContract
 {
-    use DatabaseTraits, RoleHasRelations, Slugable, SoftDeletes;
+    use DatabaseTraits, RoleHasRelations, Slugable, SoftDeletes, InheritanceTrait;
 
     /**
      * The attributes that are not mass assignable.
