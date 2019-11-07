@@ -24,7 +24,7 @@ class CreatePermissionTeamTable extends Migration
                 $table->increments('id')->unsigned();
                 $table->integer('permission_id')->unsigned()->index();
                 $table->foreign('permission_id')->references('id')->on($permissionsTable)->onDelete('cascade');
-                $table->unsignedBigInteger('team_id')->unsigned()->index();
+                $table->unsignedInteger('team_id')->unsigned()->index();
                 $table->foreign('team_id')->references('id')->on($teamsTable)->onDelete('cascade');
                 $table->timestamps();
                 $table->softDeletes();

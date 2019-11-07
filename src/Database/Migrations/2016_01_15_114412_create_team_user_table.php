@@ -23,7 +23,7 @@ class CreateTeamUserTable extends Migration
                 $table->increments('id')->unsigned();
                 $table->integer('team_id')->unsigned()->index();
                 $table->foreign('team_id')->references('id')->on($rolesTable)->onDelete('cascade');
-                $table->unsignedBigInteger('user_id')->unsigned()->index();
+                $table->unsignedInteger('user_id')->unsigned()->index();
                 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                 $table->timestamps();
                 $table->softDeletes();
