@@ -24,7 +24,7 @@ class CreateRoleTeamTable extends Migration
                 $table->increments('id')->unsigned();
                 $table->integer('role_id')->unsigned()->index();
                 $table->foreign('role_id')->references('id')->on($rolesTable)->onDelete('cascade');
-                $table->unsignedBigInteger('team_id')->unsigned()->index();
+                $table->unsignedInteger('team_id')->unsigned()->index();
                 $table->foreign('team_id')->references('id')->on($teamsTable)->onDelete('cascade');
                 $table->timestamps();
                 $table->softDeletes();
